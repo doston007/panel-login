@@ -14,6 +14,7 @@ const loginForm = new Vue({
     return {
       formData: null,
       isSubmiting: false,
+			formResponse: null,
       alias,
     };
   },
@@ -22,7 +23,11 @@ const loginForm = new Vue({
       if (this.isSubmiting) return;
       this.isSubmiting = true;
       const formData = new FormData(document.forms[this.formData.model]);
-      api.post("/login", formData).finally(() => {
+      api.post("/login", formData).then(response => {
+				this.formResponse = response.data
+			}).catch(error => {
+				this.formResponse = error.response.data
+			}).finally(() => {
         this.isSubmiting = false;
       });
     },
