@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <title>VDSina test</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-5 my-5">
+          <div class="card" id="loginForm">
+            <div class="card-header">
+              <h4>Login</h4>
+            </div>
+            <div class="card-body">
+              <form
+                v-if="formData"
+                @submit.prevent="loginSubmit"
+                :name="formData.model"
+              >
+                <template v-for="(field, key) in formData.fields">
+                  <label
+                    v-if="field.type === 'boolean'"
+                    class="d-flex align-items-center mb-2"
+                  >
+                    <input
+                      type="checkbox"
+                      :key="field.order"
+                      :required="field.required"
+                      :name="`${formData.model}[${key}]`"
+                      value="1"
+                      class="mr-2"
+                    />
+                    <div class="control-label">{{alias[field.title]}}</div>
+                  </label>
+                  <input
+                    v-else
+                    :key="field.order"
+                    :type="field.type"
+                    :name="`${formData.model}[${key}]`"
+                    class="form-control mb-3"
+                    :placeholder="alias[field.title]"
+                    :required="field.required"
+                  />
+                </template>
+                <input type="hidden" name="_csrf" :value="formData._csrf" />
+                <button
+                  type="submit"
+                  class="btn btn-primary btn-block"
+                  :disabled="isSubmiting"
+                >
+                  Войти
+                </button>
+              </form>
+              <div v-else>Загрузка...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+      integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+      crossorigin="anonymous"
+    ></script>
+    <script src="app.js"></script>
+  </body>
+</html>
