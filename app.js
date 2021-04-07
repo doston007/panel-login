@@ -23,8 +23,8 @@ const loginForm = new Vue({
       this.isSubmiting = true;
       const formData = new FormData(document.forms[this.formData.model]);
       api.post("/login", formData).finally(() => {
-				this.isSubmiting = false;
-			});
+        this.isSubmiting = false;
+      });
     },
     fetchLoginData() {
       return api.get("/login").then((response) => {
